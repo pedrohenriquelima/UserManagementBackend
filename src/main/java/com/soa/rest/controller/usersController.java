@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,8 +32,20 @@ public class usersController {
 	}
 
 	@GetMapping(value = "{name}")
-	public Users findByName(@PathVariable final String name) {
+	public Users findUserByName(@PathVariable final String name) {
 		return userJpaRepository.findByName(name);
+	}
+
+	@GetMapping(value = "/user")
+	public Optional<Users> findById(@RequestParam("id") Long id) {
+		Optional<Users> userOptional = userJpaRepository.findById(id);
+		return userOptional;
+	}
+
+	@GetMapping(value = "/user/{id}")
+	public Optional<Users> findByTemplateId(@PathVariable Long id) {
+		Optional<Users> userOptional = userJpaRepository.findById(id);
+		return userOptional;
 	}
 
 	@PostMapping(value = "/insert")
